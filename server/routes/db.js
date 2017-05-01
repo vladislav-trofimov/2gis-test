@@ -22,6 +22,7 @@ router.get('/', (req, res) => {
 
 });
 
+// '/db' - полуение POST запроса на добавление задачи
 router.post('/', (req, res)=>{
     console.log(req.body);
     res.json({"name":"John"});

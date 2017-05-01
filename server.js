@@ -1,5 +1,6 @@
 // Get dependencies
 const express = require('express');
+const options = require('./server/config/config');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
@@ -30,7 +31,7 @@ app.get('*', (req, res) => {
 /**
  * Get port from environment and store in Express.
  */
-const port = process.env.PORT || '3000';
+const port = process.env.PORT || options.port;
 app.set('port', port);
 
 /**

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/myappdatabase');
+var options = require('../config/config');
+mongoose.connect(options.mongoDatabase);
 var Schema = mongoose.Schema;
 
 // create a schema

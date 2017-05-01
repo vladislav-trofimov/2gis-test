@@ -17,8 +17,8 @@ export class TasksComponent implements OnInit {
       return this.showToggle;
   }
 
-    addTask(username){
-        this.dataService.sendData({username:username})
+    addTask(taskName, dateStart, dateFinish){
+        this.dataService.sendData({taskName:taskName, dateStart:dateStart, dateFinish:dateFinish })
             .subscribe(
                 data=>console.log(data)
             );
