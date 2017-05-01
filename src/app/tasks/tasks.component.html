@@ -1,0 +1,18 @@
+<button (click)="showData()">show list</button>
+<div *ngIf="showToggle">
+  <p>
+    Tasks list;
+  </p>
+  <ul *ngFor="let task of tasks">
+    <li>{{task.name}}</li>
+  </ul>
+</div>
+
+<div>
+  <label for="username"></label>
+  <input type="text" id="username" #username>
+  <button (click)="addTask(username.value)">add task</button>
+</div>
+
+
+
