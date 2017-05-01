@@ -12,6 +12,11 @@ export class DataService {
         .map((response:Response)=>response.json());
   }
 
+  getTaskList(){
+    return this.http.get('http://localhost:3000/db/tasklist')
+        .map((response:Response)=>response.json());
+  }
+
   sendData(username:any){
     const body = JSON.stringify(username);
     const headers = new Headers();

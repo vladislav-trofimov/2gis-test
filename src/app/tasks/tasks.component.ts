@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from "../data.service";
-
+declare var $;
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -13,6 +13,13 @@ export class TasksComponent implements OnInit {
 
   showData(){
       this.showToggle = !this.showToggle;
+      this.dataService.getData()
+          .subscribe(
+              (data:any)=>{
+                  console.log(data);
+                  this.tasks = data;
+              }
+          );
       console.log(this.showToggle);
       return this.showToggle;
   }
@@ -24,13 +31,23 @@ export class TasksComponent implements OnInit {
             );
     }
 
+    showTasks(){
+        this.dataService.getTaskList()
+            .subscribe(
+                data=>console.log(data)
+            );
+    }
+
   ngOnInit() {
-    this.dataService.getData()
-        .subscribe(
-            (data:any)=>{
-              console.log(data);
-              this.tasks = data;
-            }
-        );
+
+      $( "#dateStart, #dateFinish" ).datepicker({
+          dayNamesMin: [ "Вс","Пон", "Вт", "Ср", "Чт", "Пт", "Сб"], firstDay: 1,
+          monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
+          dateFormat: "yy-mm-dd"
+      });
+
+
+
+
   }
 }
