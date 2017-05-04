@@ -14,8 +14,8 @@ import {ProfileComponent} from "./auth/profile.component";
 const APP_ROUTES:Routes=[
     { path:'login', component:LoginComponent },
     { path:'logout', component:LogoutComponent },
-    { path:'profile', component:ProfileComponent, canActivate: [AuthGuard]},
-    { path: '**', component: ProfileComponent },
+    { path:'profile', component:ProfileComponent, canActivate: [AuthGuard] },
+    { path: '**', component: ProfileComponent, canActivate: [AuthGuard] },
 
     // { path:'about/:id', component:AboutComponent },n
     // { path:'product/:id', component:ProductComponent },

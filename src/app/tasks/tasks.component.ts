@@ -9,6 +9,7 @@ declare var $;
 export class TasksComponent implements OnInit {
   private showToggle:boolean = false;
   private tasks:any;
+  private addEmployee:Array<string>=[];
   constructor(private dataService:DataService) { }
 
   showData(){
@@ -25,7 +26,7 @@ export class TasksComponent implements OnInit {
   }
 
     addTask(taskName, dateStart, dateFinish){
-        this.dataService.sendData({taskName:taskName, dateStart:dateStart, dateFinish:dateFinish })
+        this.dataService.sendData({taskName:taskName, dateStart:dateStart, dateFinish:dateFinish, reasponsiblePersons:this.addEmployee })
             .subscribe(
                 data=>console.log(data)
             );
@@ -37,6 +38,19 @@ export class TasksComponent implements OnInit {
                 data=>console.log(data)
             );
     }
+
+  onChange(user) {
+    console.log(user);
+    let ind =  this.addEmployee.indexOf(user);
+    console.log(ind);
+    if (ind < 0){
+      this.addEmployee.push(user);
+      return;
+    }
+    if (this.addEmployee.includes(user)){
+      this.addEmployee.splice(ind,1);
+    }
+  }
 
   ngOnInit() {
 

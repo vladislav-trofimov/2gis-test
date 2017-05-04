@@ -7,12 +7,22 @@
                     <input type="text" id="username" #taskname>
                 </div>
                 <div class="form-group">
-                    <label for="username">Дата начала задачи</label>
+                    <label for="dateStart">Дата начала задачи</label>
                     <input type="text" id="dateStart" #datestart>
                 </div>
                 <div class="form-group">
-                    <label for="username">Дата конца задачи</label>
+                    <label for="dateFinish">Дата конца задачи</label>
                     <input type="text" id="dateFinish" #datefinish>
+                </div>
+                <div class="form-group">
+                  <label for="selectEmployee">Выбор исполнителя</label>
+                  <select  name="selectEmployee" id="selectEmployee" (change)="onChange($event.target.value)">
+                    <option value="user1" disabled> выбор   </option>
+                    <option value="user1">user1</option>
+                    <option value="user2">user2</option>
+                    <option value="user3">user3</option>
+                  </select>
+                  <div *ngIf="addEmployee">{{addEmployee}}</div>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary"

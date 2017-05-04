@@ -15,4 +15,10 @@ export class AuthService {
     return localStorage.getItem('user')? true : false;
   }
 
+  getCurrentUser(){
+    if (localStorage.getItem('user')){
+      return localStorage.getItem('user');
+    }
+  }
+
 }
