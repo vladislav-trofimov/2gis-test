@@ -6,18 +6,28 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { TasksComponent } from './tasks/tasks.component';
 import {DataService} from "./data.service";
+import { LoginComponent } from './auth/login.component';
+import { LogoutComponent } from './auth/logout.component';
+import { ProfileComponent } from './auth/profile.component';
+import {AuthGuard} from "./auth/auth.guard";
+import {AuthService} from "./auth/auth.service";
+import {routing} from "./app.routing";
 
 @NgModule({
   declarations: [
     AppComponent,
-    TasksComponent
+    TasksComponent,
+    LoginComponent,
+    LogoutComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    routing
   ],
-  providers: [DataService],
+  providers: [DataService, AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
