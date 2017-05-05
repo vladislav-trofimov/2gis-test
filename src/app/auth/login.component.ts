@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "./auth.service";
+import {StatusService} from "./status.service";
 
 
 @Component({
   selector: 'app-login',
   template: `
-    <p>
-      login Works!
-    </p>
+    
     <form method="post">
       username: <input type="text" name="username" #username><br>
       password: <input type="text" name=" password" #password><br>
@@ -19,7 +18,7 @@ import {AuthService} from "./auth.service";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, private authService:AuthService) { }
+  constructor(private router: Router, private authService:AuthService, private statusService:StatusService) { }
 
   checkUserData(username, password){
     this.authService.checkUser(username, password); //+map
@@ -27,6 +26,8 @@ export class LoginComponent implements OnInit {
     let user = {name:'John', role:'admin'};
     localStorage.setItem('user', JSON.stringify(user));
     console.log('setting user');
+
+    this.statusService.setStatus(true);
 
     //this.router.navigate(['/profile']);
   }

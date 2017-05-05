@@ -18,9 +18,10 @@
                   <label for="selectEmployee">Выбор исполнителя</label>
                   <select  name="selectEmployee" id="selectEmployee" (change)="onChange($event.target.value)">
                     <option value="user1" disabled> выбор   </option>
-                    <option value="user1">user1</option>
-                    <option value="user2">user2</option>
-                    <option value="user3">user3</option>
+                    <option *ngFor="let employer of employee" [value]="employer.name">{{employer.name}}</option>
+                    <!--<option value="user1">user1</option>-->
+                    <!--<option value="user2">user2</option>-->
+                    <!--<option value="user3">user3</option>-->
                   </select>
                   <div *ngIf="addEmployee">{{addEmployee}}</div>
                 </div>
@@ -35,16 +36,16 @@
 
 </div>
 
-<button (click)="showData()">show list</button>
+<button (click)="showEmployee()">show list</button>
 <div *ngIf="showToggle">
   <p>
-    Tasks list;
+    Employee list;
   </p>
-  <ul *ngFor="let task of tasks">
-    <li>{{task.name}}</li>
+  <ul *ngFor="let employer of employee">
+    <li>{{employer.name}}</li>
   </ul>
 </div>
 
-<button (click)="showTasks()">Task list</button>
+<!--<button (click)="showTasks()">Task list</button>-->
 
 

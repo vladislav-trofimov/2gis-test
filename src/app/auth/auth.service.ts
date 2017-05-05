@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Http} from "@angular/http";
 
+
 @Injectable()
 export class AuthService {
 
@@ -15,7 +16,7 @@ export class AuthService {
     return localStorage.getItem('user')? true : false;
   }
 
-  getCurrentUser(){
+  getCurrentUser (){
     if (localStorage.getItem('user')){
       return localStorage.getItem('user');
     }

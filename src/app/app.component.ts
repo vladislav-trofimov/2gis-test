@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "./auth/auth.service";
+import {StatusService} from "./auth/status.service";
 
 @Component({
   selector: 'app-root',
@@ -12,28 +13,37 @@ export class AppComponent implements OnInit{
   currentUser:any='';
 
 
-  constructor(private authService:AuthService){
-
+  constructor(private authService:AuthService, private statusService:StatusService){
+    this.statusService.infoChanged().subscribe({
+      next: () => {
+        console.log('Object info from statusService has changed!');
+        this.switchAuthStatus();
+        this.authSwitch = true;
+      }
+    });
   }
-
+  //
   switchAuthStatus(){
-    this.currentUser = JSON.parse(this.authService.getCurrentUser()).name || '';
-    this.authSwitch = this.currentUser ? true : false;
-    console.log('currentUser: '+this.currentUser);
+     if (this.authService.isAuth()){
+       this.currentUser = JSON.parse(this.authService.getCurrentUser()).name || '';
+       this.authSwitch = true;
+     }
+      console.log('currentUser: '+this.currentUser);
   }
-
-
+  //
+  //
   logout(){
     this.currentUser='';
     this.authSwitch = false;
   }
-
-  login(){
-    this.currentUser = JSON.parse(this.authService.getCurrentUser()).name || '';
-    this.authSwitch = true;
-  }
-
-
+  //
+  // login(){
+  //   this.currentUser = 'MockUser';
+  //     //JSON.parse(this.authService.getCurrentUser()).name || '';
+  //   this.authSwitch = true;
+  // }
+  //
+  //
   ngOnInit(){
     this.switchAuthStatus();
   }

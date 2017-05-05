@@ -17,8 +17,8 @@ export class DataService {
         .map((response:Response)=>response.json());
   }
 
-  sendData(username:any){
-    const body = JSON.stringify(username);
+  sendData(task:any){
+    const body = JSON.stringify(task);
     const headers = new Headers();
     headers.append('Content-type', 'application/json');
     return this.http.post('http://localhost:3000/db', body, {headers:headers})

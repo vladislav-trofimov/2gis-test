@@ -25,9 +25,8 @@ router.post('/', (req, res)=>{
         name:req.body.taskName,
         dateStart:req.body.dateStart,
         dateFinish:req.body.dateFinish,
-        reasponsiblePersons:['Jonh', 'Eva']
+        reasponsiblePersons:req.body.reasponsiblePersons
     });
-
     newTask.save(function (err) {
         if (err){
             res.setHeader('Content-Type', 'application/json');

@@ -2,12 +2,13 @@
 {{title}}
 </h1>
 <hr>
-<div *ngIf="!authSwitch">
-  <a [routerLink]="['login']" (click)="login()">logIn</a>
-</div>
+<!--<div *ngIf="!authSwitch">-->
+  <!--<a [routerLink]="['login']" (click)="login()">logIn</a>-->
+<!--</div>-->
 
 <div *ngIf="authSwitch">
-  {{ currentUser }}<a [routerLink]="['logout']" (click)="logout()">logOut</a>
+  Вы вошли как:  {{ currentUser }}<br>
+  <a [routerLink]="['logout']" (click)="logout()">logOut</a>
 
 </div>
 <router-outlet></router-outlet>
