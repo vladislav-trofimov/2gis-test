@@ -3,8 +3,8 @@
         <div class="col-md-6">
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label for="username">Название задачи</label>
-                    <input type="text" id="username" #taskname>
+                    <label for="taskname">Название задачи</label>
+                    <input type="text" id="taskname" #taskname>
                 </div>
                 <div class="form-group">
                     <label for="dateStart">Дата начала задачи</label>
@@ -32,6 +32,30 @@
             </form>
         </div>
     </div>
+    <div class="row">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="username">Имя</label>
+          <input type="text" id="username" #username>
+        </div>
+        <div class="form-group">
+          <label for="position">Должность</label>
+          <input type="text" id="position" #position>
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input type="text" id="password" #password>
+        </div>
+        <div class="form-group">
+          <label for="admin">Статус сотрудника:   </label>
+          <input type="checkbox" name="checkbox" id="admin" #admin  [(ngModel)]="adminStatus">Админ<br>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary"
+                  (click)="addEmployer(username.value, position.value, password.value, admin)">Добавить сотрудника</button>
+        </div>
+      </form>
+    </div>
 
 
 </div>
@@ -46,6 +70,7 @@
   </ul>
 </div>
 
-<!--<button (click)="showTasks()">Task list</button>-->
+
+
 
 

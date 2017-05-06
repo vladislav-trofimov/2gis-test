@@ -21,15 +21,19 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private authService:AuthService, private statusService:StatusService) { }
 
   checkUserData(username, password){
-    this.authService.checkUser(username, password); //+map
-    console.log(username, password);
-    let user = {name:'John', role:'admin'};
-    localStorage.setItem('user', JSON.stringify(user));
-    console.log('setting user');
-
-    this.statusService.setStatus(true);
-
-    //this.router.navigate(['/profile']);
+    this.authService.checkUser({
+      username:username,
+      password:password //шифрование!
+    }).subscribe(
+      data=>{
+        console.dir('check user data: '+ data.name + data.admin);
+        let user = {name:data.name, role:data.admin};
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log('setting user');
+        this.statusService.setStatus(true);
+        this.router.navigate(['/profile']);
+      }
+    );
   }
 
   ngOnInit() {

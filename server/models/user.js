@@ -4,10 +4,10 @@ var connection = mongoose.createConnection(options.mongoDatabase);
 
 // create a schema
 var userSchema = new mongoose.Schema({
-    name: String,
-    username: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true },
+    position: { type: String, required: true },
     password: { type: String, required: true },
-    admin: Boolean
+    admin: { type: Boolean, required: true },
 });
 
 // the schema is useless so far

@@ -9,13 +9,14 @@ declare let $;
 export class TasksComponent implements OnInit {
   private showToggle:boolean = false;
   private employee:any;
+  private adminStatus:boolean = false;
   //private employerList:any=[];
   private addEmployee:Array<string>=[];
   constructor(private dataService:DataService) { }
 
   showEmployee(){
       this.showToggle = !this.showToggle;
-      this.dataService.getData()
+      this.dataService.getEmployeeList()
           .subscribe(
               (data:any)=>{
                   console.log(data);
@@ -26,23 +27,34 @@ export class TasksComponent implements OnInit {
       return this.showToggle;
   }
 
-    addTask(taskName, dateStart, dateFinish){
-        this.dataService.sendData({
-          taskName:taskName,
-          dateStart:dateStart,
-          dateFinish:dateFinish,
-          reasponsiblePersons:this.addEmployee })
-            .subscribe(
-                data=>console.log(data)
-            );
-    }
+  addTask(taskName, dateStart, dateFinish){
+    this.dataService.sendTaskData({
+      taskName:taskName,
+      dateStart:dateStart,
+      dateFinish:dateFinish,
+      reasponsiblePersons:this.addEmployee })
+      .subscribe(
+        data=>console.log(data)
+      );
+  }
 
-    showTasks(){
-        this.dataService.getTaskList()
-            .subscribe(
-                data=>console.log(data)
-            );
-    }
+  addEmployer(username, position, password){
+    this.dataService.sendUserData({
+      name:username,
+      position:position,
+      password:password,
+      admin:this.adminStatus })
+      .subscribe(
+        data=>console.log(data)
+      );
+  }
+
+  // showTasks(){
+  //   this.dataService.getTaskList()
+  //     .subscribe(
+  //       data=>console.log(data)
+  //     );
+  // }
 
   onChange(user) {
     console.log(user);
@@ -59,8 +71,7 @@ export class TasksComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('---');
-    this.dataService.getData()
+    this.dataService.getEmployeeList()
       .subscribe(
         (data:any)=>{
           this.employee = data;
