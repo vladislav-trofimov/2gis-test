@@ -8,6 +8,8 @@ var taskSchema = new mongoose.Schema({
      dateStart: { type: Date, default: Date.now },
      dateFinish: { type: Date },
      reasponsiblePersons: [{type:String}],
+     status:{type:String, default:"активная"},
+     comments: [{type:Object, default:{}}],
      // comments: [{ user:String, body: String, date: Date }],
      // status:{type:String},
      // priority:{type:String},

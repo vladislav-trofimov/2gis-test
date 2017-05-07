@@ -40,13 +40,14 @@ router.post('/addtask', (req, res)=>{
     });
 });
 
-router.get('/tasklist', (req, res)=>{
-    User.find({}, function(err, users) {
+// 'db/tasklist' - полуение POST запроса на получение списка задач
+router.post('/tasklist', (req, res)=>{
+    Task.find({}, function(err, tasks) {
         if (err) throw err;
         // object of all the users
-        //console.log(users);
+        console.log(tasks);
         res.setHeader('Content-Type', 'application/json');
-        res.json(users);
+        res.json(tasks);
     });
 });
 
@@ -89,6 +90,37 @@ router.post('/checkuser', (req, res)=>{
     }
   });
 });
+
+// 'db/updatestatus' - полуение POST запроса на изменение статуса задачи
+router.post('/updatestatus', (req, res)=>{
+  "use strict";
+  Task.findById(req.body.id, function (err, task) {
+    if (err) return handleError(err);
+    task.status = 'завершена';
+    task.save(function (err, updatedTask) {
+      if (err) return handleError(err);
+      console.log(updatedTask);
+      //res.send(updatedTank);
+    });
+  });
+});
+
+router.post('/updatetask', (req, res)=>{
+  "use strict";
+  Task.findById(req.body.id, function (err, task) {
+    if (err) return handleError(err);
+    task.name = req.body.name;
+    task.dateStart = req.body.dateStart;
+    task.dateFinish = req.body.dateFinish;
+    task.reasponsiblePersons = req.body.reasponsiblePersons;
+    task.save(function (err, updatedTask) {
+      if (err) return handleError(err);
+      console.log(updatedTask);
+      //res.send(updatedTank);
+    });
+  });
+});
+
 
 function getHash(password) {
   return crypto.createHmac('sha1', 'my secret world').update(password).digest('hex');

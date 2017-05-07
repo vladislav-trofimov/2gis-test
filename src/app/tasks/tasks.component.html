@@ -1,7 +1,7 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-horizontal">
+  <div class="row">
+    <div class="col-md-6">
+      <form class="form-horizontal">
                 <div class="form-group">
                     <label for="taskname">Название задачи</label>
                     <input type="text" id="taskname" #taskname>
@@ -30,9 +30,10 @@
                             (click)="addTask(taskname.value, datestart.value, datefinish.value)">Добавить задачу</button>
                 </div>
             </form>
-        </div>
     </div>
-    <div class="row">
+  </div>
+  <div class="row">
+    <div class="col-md-6">
       <form class="form-horizontal">
         <div class="form-group">
           <label for="username">Имя</label>
@@ -56,19 +57,81 @@
         </div>
       </form>
     </div>
+    <div class="col-md-6">
 
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <button (click)="showTasks()" class="btn btn-success">Показать задачи</button>
+      <div *ngIf="tasks.length!=0">
+        <table class="table table-condensed">
+          <tr>
+            <td>Название</td>
+            <td>Дата начала</td>
+            <td>Дата звершения</td>
+            <td>Ответственные</td>
+            <td>Комментарии</td>
+            <td>Статус</td>
+            <td *ngIf="currentStatus">Удалить</td>
+          </tr>
+          <tr *ngFor="let task of tasks">
+            <td *ngIf="currentStatus"><a href="{{task._id}}">{{task.name}}</a></td>
+            <td *ngIf="!currentStatus">{{task.name}}</td>
+            <td>{{task.dateStart | date}}</td>
+            <td>{{task.dateFinish | date}}</td>
+            <td>{{task.reasponsiblePersons}}</td>
+            <td><span id="comment" (click)="cons(task._id)">подробнее...</span></td>
+            <td>{{task.status}}</td>
+            <td *ngIf="currentStatus"><a href="del{{task._id}}">x</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div id="comments">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="modal">
+  <div id="changeTaskForm">
+    <span class="close" (click)="closeModalWindow()">Закрыть</span>
+    <form class="form-horizontal fixed">
+      <div class="form-group">
+        <label for="newtaskname">Название задачи</label>
+        <input type="text" id="newtaskname" #newtaskname [value]="editTask.name">
+      </div>
+      <div class="form-group">
+        <label for="newdateStart">Дата начала задачи</label>
+        <input type="text" id="newdateStart" #newdatestart [value]="editTask.dateStart | date">
+      </div>
+      <div class="form-group">
+        <label for="newdateFinish">Дата конца задачи</label>
+        <input type="text" id="newdateFinish" #newdatefinish [value]="editTask.dateFinish | date">
+      </div>
+      <div class="form-group">
+        <label for="newselectEmployee">Выбор исполнителя</label>
+        <select  name="selectEmployee" id="newselectEmployee" (change)="onChange($event.target.value)">
+          <option value="user1" disabled> выбор   </option>
+          <option *ngFor="let employer of employee" [value]="employer.name">{{employer.name}}</option>
+        </select>
+        <div *ngIf="addEmployee">{{addEmployee}}</div>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary"
+                (click)="editTaskSend(newtaskname.value, newdatestart.value, newdatefinish.value)">Изменить задачу</button>
+      </div>
+    </form>
+  </div>
 
 </div>
 
-<button (click)="showEmployee()">show list</button>
-<div *ngIf="showToggle">
-  <p>
-    Employee list;
-  </p>
-  <ul *ngFor="let employer of employee">
-    <li>{{employer.name}}</li>
-  </ul>
-</div>
+
 
 
 

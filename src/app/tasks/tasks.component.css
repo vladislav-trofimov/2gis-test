@@ -1,0 +1,35 @@
+#modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 700;
+  /* нужно если в документе есть элементы с z-index > 0 */
+  background-color: rgba(6, 8, 19, 0.7);
+}
+
+#changeTaskForm{
+  background-color:white;
+  position: fixed;
+  left: 30%;
+  top: 30%;
+  width: 40%;
+  height: 30%;
+  z-index: 800;
+}
+
+.fixed{
+  margin-left: 10%;
+  padding-top: 5%;
+}
+
+.close{
+  z-index: 800;
+}
+
+#comment:hover{
+  cursor: pointer;
+  color: rgba(11,9,106,0.46);
+  text-decoration: double;
+}

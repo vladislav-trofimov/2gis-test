@@ -19,4 +19,18 @@ export class StatusService {
     return this.infoStatus;
   }
 
+  getStatus(){
+    let user = localStorage.getItem('user');
+    if (user){
+      return JSON.parse(user).role;
+    }
+  }
+
+  getUserName(){
+    let user = localStorage.getItem('user');
+    if (user){
+      return JSON.parse(user).name;
+    }
+  }
+
 }
