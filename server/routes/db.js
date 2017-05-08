@@ -121,6 +121,30 @@ router.post('/updatetask', (req, res)=>{
   });
 });
 
+router.post('/addcomment', (req, res)=>{
+  "use strict";
+  console.log(req.body);
+  Task.findByIdAndUpdate(
+    req.body.id,
+    {$push: {"comments":{name:req.body.user, text:req.body.comment, date:req.body.date}}},
+    {safe: true, upsert: true, new : true},
+    function(err, comment) {
+     console.log(err);
+    }
+  );
+});
+
+// Contact.findByIdAndUpdate(
+//   info._id,
+//   {$push: {"messages": {title: title, msg: msg}}},
+//   {safe: true, upsert: true, new : true},
+//   function(err, model) {
+//     console.log(err);
+//   }
+// );
+
+
+
 
 function getHash(password) {
   return crypto.createHmac('sha1', 'my secret world').update(password).digest('hex');

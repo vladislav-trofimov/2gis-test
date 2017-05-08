@@ -31,7 +31,7 @@ export class DataService {
     const body = JSON.stringify(task);
     const headers = new Headers();
     headers.append('Content-type', 'application/json');
-    return this.http.post('http://localhost:3000/db//addemployee', body, {headers:headers})
+    return this.http.post('http://localhost:3000/db/addemployee', body, {headers:headers})
       .map((data:Response)=>data.json());
   }
 
@@ -39,7 +39,7 @@ export class DataService {
     const body = JSON.stringify(taskId);
     const headers = new Headers();
     headers.append('Content-type', 'application/json');
-    return this.http.post('http://localhost:3000/db//updatestatus',body, {headers:headers})
+    return this.http.post('http://localhost:3000/db/updatestatus',body, {headers:headers})
       .map((data:Response)=>data.json());
   }
 
@@ -47,7 +47,15 @@ export class DataService {
     const body = JSON.stringify(task);
     const headers = new Headers();
     headers.append('Content-type', 'application/json');
-    return this.http.post('http://localhost:3000/db//updatetask',body, {headers:headers})
+    return this.http.post('http://localhost:3000/db/updatetask',body, {headers:headers})
+      .map((data:Response)=>data.json());
+  }
+
+  sendComment(comment){
+    const body = JSON.stringify(comment);
+    const headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    return this.http.post('http://localhost:3000/db/addcomment',body, {headers:headers})
       .map((data:Response)=>data.json());
   }
 

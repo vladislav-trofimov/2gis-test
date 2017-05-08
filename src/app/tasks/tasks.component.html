@@ -14,6 +14,11 @@
                     <label for="dateFinish">Дата конца задачи</label>
                     <input type="text" id="dateFinish" #datefinish>
                 </div>
+                <div *ngIf="(datestart.value)&&(datefinish.value)" >
+                  <div *ngIf="(datefinish.value<datestart.value)" class="alert alert-danger">
+                    Дата завершения должна быть больше даты начала
+                  </div>
+                </div>
                 <div class="form-group">
                   <label for="selectEmployee">Выбор исполнителя</label>
                   <select  name="selectEmployee" id="selectEmployee" (change)="onChange($event.target.value)">
@@ -81,7 +86,7 @@
             <td>{{task.dateStart | date}}</td>
             <td>{{task.dateFinish | date}}</td>
             <td>{{task.reasponsiblePersons}}</td>
-            <td><span id="comment" (click)="cons(task._id)">подробнее...</span></td>
+            <td><span id="comment" (click)="showComments(task._id)">подробнее...</span></td>
             <td>{{task.status}}</td>
             <td *ngIf="currentStatus"><a href="del{{task._id}}">x</a></td>
           </tr>

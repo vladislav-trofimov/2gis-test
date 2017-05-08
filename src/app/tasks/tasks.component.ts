@@ -158,25 +158,34 @@ export class TasksComponent implements OnInit{
   }
 
 
-  cons(id){
+  showComments(id){
     let currentTask;
     this.tasks.forEach((task)=>{
       if (task._id == id) currentTask = task;
     });
     this.comments.innerHTML = '';
-    let doc = document.createElement('p');
+    let doc = document.createElement('div');
     let title = document.createElement('p');
     let button = document.createElement('button');
     button.addEventListener('click',  ()=> {
       console.log('Пользователь: '+ this.currentUser+ '  Комментарий: '
         + textComment.value + ' Дата: ' + new Date + ' для задачи: ' + currentTask._id);
+      this.addComment(currentTask._id, this.currentUser, textComment.value, new Date);
     });
     let textComment = document.createElement('textarea');
     textComment.setAttribute("rows", "5");
     textComment.setAttribute("cols", "35");
+    textComment.setAttribute("id", "comArea");
+    doc.style.height = "150px";
+    doc.style.overflow = "auto";
     button.textContent = 'Добавить комментарий';
     title.textContent = 'Комментарии';
-    doc.textContent = currentTask.name;
+    let commentText = '<b>'+currentTask.name+'</b>'+'<hr>';
+    currentTask.comments.forEach((comment)=>{
+      commentText+='имя: '+comment.name+'<br>'+'комментарий: '+comment.text+'<br>'+comment.date+'<hr>';
+    });
+    doc.innerHTML=commentText;
+    doc.style.height = "250px";
     this.comments.appendChild(title);
     this.comments.appendChild(doc);
     this.comments.appendChild(textComment);
@@ -184,6 +193,26 @@ export class TasksComponent implements OnInit{
     this.comments.style.visibility = 'visible';
   }
 
+  addComment(id, user, commentText, date){
+    let doc = document.createElement('div');
+    let comArea = document.getElementById('comArea');
+    doc.style.color = 'blue';
+    doc.innerHTML= 'имя: '+user+'<br>'+'комментарий: '+commentText+'<br>'+date.toDateString() +'<hr>';
+    console.log(comArea);
+    this.comments.insertBefore(doc, comArea);
+    let comment ={
+      id:id,
+      user:user,
+      comment:commentText,
+      date:date
+    };
+    this.dataService.sendComment(comment)
+      .subscribe(
+        (data:any)=>{
+          //this.employee = data;
+        }
+      );
+  }
 
   ngOnInit() {
     this.currentStatus = this.statusService.getStatus();

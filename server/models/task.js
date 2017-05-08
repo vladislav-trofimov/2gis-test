@@ -2,17 +2,23 @@ var mongoose = require('mongoose');
 var options = require('../config/config');
 var connection = mongoose.createConnection(options.mongoDatabase);
 
-// create a schema
+// create a  comment schema - children for taskSchema
+var commentSchema = new mongoose.Schema({
+  name: { type: String },
+  text: { type: String },
+  date: { type: Date, default: Date.now }
+});
+
+// create a  Task schema
 var taskSchema = new mongoose.Schema({
-     name: { type: String, required: true, unique: true },
-     dateStart: { type: Date, default: Date.now },
-     dateFinish: { type: Date },
-     reasponsiblePersons: [{type:String}],
-     status:{type:String, default:"активная"},
-     comments: [{type:Object, default:{}}],
-     // comments: [{ user:String, body: String, date: Date }],
-     // status:{type:String},
-     // priority:{type:String},
+  name: { type: String, required: true, unique: true },
+  dateStart: { type: Date, default: Date.now },
+  dateFinish: { type: Date },
+  reasponsiblePersons: [{type:String}],
+  status:{type:String, default:"активная"},
+  comments: [commentSchema]
+  //  [{type:Object, default:{}}],
+  // priority:{type:String},
 });
 
 // the schema is useless so far
