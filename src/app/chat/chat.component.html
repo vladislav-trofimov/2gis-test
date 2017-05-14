@@ -1,0 +1,17 @@
+<div id="wrapNickname">
+  <label for="nickname">enter nick:</label>
+  <input type="text" id="nickname" #nickname [(ngModel)]="name">
+  <input type="submit" (click)="enterName(nickname.value)">
+</div>
+
+<div id="users"></div>
+<hr>
+<button (click)="secretRoomEnter()">enter secret room</button>
+<button (click)=" privateRoomSendMessages()">enter private room</button>
+<hr>
+<ul id="messages">
+  Чат
+</ul>
+<form action="">
+  <input id="m" autocomplete="off" #message /><button (click)="send(message.value)">Send</button>
+</form>

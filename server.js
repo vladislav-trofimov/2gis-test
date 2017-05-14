@@ -4,6 +4,11 @@ const options = require('./server/config/config');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+let chatHandle = require('./server/chat/chat');
+let userHandle = require('./server/chat/users');
+let privateChatHandle = require('./server/chat/private');
+
+let users = {};
 
 // Get our API routes
 const api = require('./server/routes/api');
@@ -38,6 +43,15 @@ app.set('port', port);
  * Create HTTP server.
  */
 const server = http.createServer(app);
+
+const io = require('socket.io').listen(server);
+io.sockets.on('connection', function(client){
+  console.log('a user connected');
+  chatHandle(client);
+  userHandle(client, users);
+  privateChatHandle(client, users, io);
+});
+
 
 /**
  * Listen on provided port, on all network interfaces.

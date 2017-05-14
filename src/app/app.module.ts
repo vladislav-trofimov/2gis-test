@@ -13,6 +13,8 @@ import {AuthGuard} from "./auth/auth.guard";
 import {AuthService} from "./auth/auth.service";
 import {routing} from "./app.routing";
 import {StatusService} from "./auth/status.service";
+import { ChatComponent } from './chat/chat.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import {StatusService} from "./auth/status.service";
     TasksComponent,
     LoginComponent,
     LogoutComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
