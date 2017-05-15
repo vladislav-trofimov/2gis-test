@@ -4,11 +4,27 @@
   <input type="submit" (click)="enterName(nickname.value)">
 </div>
 
-<div id="users"></div>
+<div *ngIf="users" id="users">
+  есть народ в чате!
+  <ul *ngFor="let user of users">
+    <li >
+      {{user}}
+      <button (click)="addUserToChat(user)">add</button>
+    </li>
+
+  </ul>
+</div>
 <hr>
 <button (click)="secretRoomEnter()">enter secret room</button>
 <button (click)=" privateRoomSendMessages()">enter private room</button>
+<button (click)=" emitPrivateMessage()">emit private message</button>
 <hr>
+
+<div class="groupChat" #groupChat>
+  <h4>Group Chat</h4>
+  <p></p>
+</div>
+
 <ul id="messages">
   Чат
 </ul>

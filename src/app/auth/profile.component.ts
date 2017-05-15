@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
-  template: `
-    <p>
-      profile Works!
-    </p>
-    <app-tasks></app-tasks>
-  `,
-  styles: []
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
 
