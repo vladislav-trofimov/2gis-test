@@ -1,7 +1,11 @@
-module.exports = function (client, users, io) {
+module.exports = function (client, users, privateUsers, io) {
+  let tempList=[];
   client.on('subscribe',function(room){
-    console.log('joining room', room, '  :  ' , client.nickname);
-    client.join(room);
+    if (!tempList.includes(client.nickname)){
+      console.log('joining room', room, '  :  ' , client.nickname);
+      tempList.push(client.nickname);
+      client.join(room);
+    }
   });
 
   client.on('send message',function(data){

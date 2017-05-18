@@ -27,15 +27,18 @@ export class ChatComponent implements OnInit{
     });
 
     this.socket.on('usernames',  (data)=> {
-      console.log('userList');
-      console.log(data);
       let html = '';
       this.users = data;
-      // data.forEach(function (user) {
-      //   html+='<a  #user class="user" href="#" id="' + user + '" (click)="f()">'+ user +'</a>'+'<br>';
-      // });
-      // $('#users').html('').append(html);
     });
+
+    this.socket.on('privateUsernames',  (data)=> {
+      console.log(data);
+      //this.users = data;
+    });
+
+    // this.socket.on('close private chat', ()=>{
+    //
+    // });
 
     this.socket.on('conversation private post',function(data){
       console.log(data.message);
@@ -95,7 +98,7 @@ export class ChatComponent implements OnInit{
     console.log('hi from a');
     console.log(user);
     this.socket.emit("private", { to:user, msg: 'create room'});
-    //this.socket.emit("private room create", { to:user, msg: 'private room: '});
+    this.socket.emit("new private user", { master:this.name, user:user });
     this.createPrivateChat();
   }
 
@@ -103,13 +106,12 @@ export class ChatComponent implements OnInit{
     this.renderer.setElementStyle(this.groupChat.nativeElement, 'visibility', 'visible');
     let conversation_id = 13;
     this.socket.emit('subscribe', conversation_id);
-
-    // this.socket.emit('send message',{
-    //   room: conversation_id,
-    //   message:"Some message"
-    // });
-
   }
+
+  closePrivateChat(){
+    this.renderer.setElementStyle(this.groupChat.nativeElement, 'visibility', 'hidden');
+  }
+
 
 
   ngOnInit(){
