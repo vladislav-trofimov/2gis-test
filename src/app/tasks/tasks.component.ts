@@ -21,7 +21,10 @@ export class TasksComponent implements OnInit{
   listenFunc: Function;
   constructor(private dataService:DataService, elementRef:ElementRef, renderer:Renderer, private statusService:StatusService) {
     this.listenFunc = renderer.listen(elementRef.nativeElement, 'click', (event) => {
-      event.preventDefault();
+      console.log(event.target.nodeName+'  :  target');
+      if(event.target.nodeName !='INPUT'){
+        event.preventDefault();
+      }
       let target = event.target || '';
       if (target.attributes.href){
         console.log(target.attributes.href.nodeValue);

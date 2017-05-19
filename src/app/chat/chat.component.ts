@@ -2,6 +2,7 @@ import {Component, OnInit, Renderer, ViewChild} from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
+import {StatusService} from "../auth/status.service";
 declare const $;
 
 @Component({
@@ -12,11 +13,13 @@ declare const $;
 
 export class ChatComponent implements OnInit{
   @ViewChild('groupChat')  groupChat;
+  @ViewChild('#privateChatText') privateChatText;
   private socket;
   private name:string;
+  private role:string;
   private users:Array<string>=[];
 
-  constructor( private renderer:Renderer) {
+  constructor( private renderer:Renderer, private statusService:StatusService) {
     this.socket = io('http://localhost:3000');
 
     const listener = Observable.fromEvent(this.socket, 'message');
@@ -32,16 +35,20 @@ export class ChatComponent implements OnInit{
     });
 
     this.socket.on('privateUsernames',  (data)=> {
-      console.log(data);
+      //console.log(data);
       //this.users = data;
+      this.groupChat.nativeElement.children[1].innerHTML='';
+      data.forEach((user)=>{
+        this.groupChat.nativeElement.children[1].innerHTML+=user+'<br>';
+      });
     });
 
     // this.socket.on('close private chat', ()=>{
     //
     // });
 
-    this.socket.on('conversation private post',function(data){
-      console.log(data.message);
+    this.socket.on('conversation private post',(data)=>{
+      this.groupChat.nativeElement.children[2].innerHTML+=data.message+'<br>';
     });
 
     this.socket.on('private',(data)=>{
@@ -113,20 +120,29 @@ export class ChatComponent implements OnInit{
   }
 
 
+  emitPrivateMessage(message){
+    this.socket.emit('send message',{
+      room: 13,
+      message:this.name + ' :  '+ message
+    });
+
+  }
+
+  // sendToPrivateChat(privateMessage){
+  //   console.log(privateMessage);
+  // }
 
   ngOnInit(){
-    console.log(this.groupChat.nativeElement);
+    this.name = this.statusService.getUserName();
+    this.role = this.statusService.getStatus();
+    if(this.name){
+      this.enterName(this.name);
+    }
     this.renderer.setElementStyle(this.groupChat.nativeElement, 'visibility', 'hidden');
     $('#m').css("color", "blue");
   }
 
-  emitPrivateMessage(){
-    this.socket.emit('send message',{
-      room: 13,
-      message:"Some message from : " +this.name
-    });
 
-  }
 
 
 }
