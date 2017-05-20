@@ -9,16 +9,13 @@ let Task = require('../models/task');
 // '/' - полуение POST запроса на получение списка сотрудников
 router.post('/', (req, res) => {
     User.find({}, function(err, users) {
-        if (err) throw err;
-
-        // object of all the users
-        //console.log(users);
+        if (err) {
+          res.setHeader('Content-Type', 'application/json');
+          res.json(err);
+        }
         res.setHeader('Content-Type', 'application/json');
         res.json(users);
     });
-
-
-
 });
 
 // '/db' - полуение POST запроса на добавление задачи
@@ -43,8 +40,10 @@ router.post('/addtask', (req, res)=>{
 // 'db/tasklist' - полуение POST запроса на получение списка задач
 router.post('/tasklist', (req, res)=>{
     Task.find({}, function(err, tasks) {
-        if (err) throw err;
-        // object of all the users
+        if (err) {
+          res.json(err);
+          console.log('terrible error'+err);
+        }
         console.log(tasks);
         res.setHeader('Content-Type', 'application/json');
         res.json(tasks);

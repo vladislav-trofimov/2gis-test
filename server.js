@@ -12,7 +12,6 @@ let users = {};
 let privateUsers = {};
 
 // Get our API routes
-const api = require('./server/routes/api');
 const db = require('./server/routes/db');
 const upload = require('./server/routes/upload');
 
@@ -26,7 +25,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Set our api routes
-app.use('/api', api);
 
 app.use('/db', db);
 

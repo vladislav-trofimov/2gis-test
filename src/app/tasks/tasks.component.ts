@@ -105,7 +105,7 @@ export class TasksComponent implements OnInit{
   showTasks(){
     this.dataService.getTaskList()
       .subscribe(
-        data=> {
+        data => {
           console.log(data);
           this.tasks = data;
           if(!this.currentStatus){
@@ -120,6 +120,8 @@ export class TasksComponent implements OnInit{
             this.tasks = newTaskList;
             console.log(newTaskList);
           }
+        }, error => {
+          console.log(error);
         });
   }
 
