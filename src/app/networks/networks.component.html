@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <form enctype="multipart/form-data" action="upload" method="post">
+      <div>
+        <div class="form-group">
+          <label for="text">введите текст</label>
+          <input type="text" id="text" class="form-control" #textPost>
+        </div>
+        <div class="form-group">
+          <label for="image-file">выберите изображение</label>
+          <input id="image-file" type="file" (change)="file = $event.target.files[0]" placeholder="Upload file" accept=".jpg,.png,.gif">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="networkPost(textPost.value)">отправить</button>
+    </form>
+  </div>
+</div>

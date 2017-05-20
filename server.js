@@ -14,6 +14,7 @@ let privateUsers = {};
 // Get our API routes
 const api = require('./server/routes/api');
 const db = require('./server/routes/db');
+const upload = require('./server/routes/upload');
 
 const app = express();
 
@@ -28,6 +29,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/api', api);
 
 app.use('/db', db);
+
+app.use('/upload', upload);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {

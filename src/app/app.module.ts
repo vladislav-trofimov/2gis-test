@@ -14,6 +14,7 @@ import {AuthService} from "./auth/auth.service";
 import {routing} from "./app.routing";
 import {StatusService} from "./auth/status.service";
 import { ChatComponent } from './chat/chat.component';
+import { NetworksComponent } from './networks/networks.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ChatComponent } from './chat/chat.component';
     LogoutComponent,
     ProfileComponent,
     ChatComponent,
+    NetworksComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@
 # compiled output
 /dist
 /tmp
+/server/config/twitter.json
 
 # dependencies
 /node_modules
