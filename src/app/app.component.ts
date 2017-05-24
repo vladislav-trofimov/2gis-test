@@ -8,7 +8,7 @@ import {StatusService} from "./auth/status.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'app works!';
+  title = 'Управление департаментом системных проектов';
   authSwitch:boolean;
   currentUser:any='';
 

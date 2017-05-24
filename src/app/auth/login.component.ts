@@ -7,14 +7,47 @@ import {StatusService} from "./status.service";
 @Component({
   selector: 'app-login',
   template: `
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4 login">
+        <h4>вход в систему</h4>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">имя</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="name"  #username>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="pass" class="col-sm-2 control-label">пароль</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="pass"  #password>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button (click)="checkUserData(username.value, password.value)" class="btn btn-default">войти</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
     
-    <form method="post">
-      username: <input type="text" name="username" #username><br>
-      password: <input type="text" name=" password" #password><br>
-      <button (click)="checkUserData(username.value, password.value)">send</button>
-    </form>
   `,
-  styles: []
+  styles: [
+    `
+      h4 {
+        background-color: #20a9e1;
+        color: white;
+        text-align: center;
+      }
+
+      .login {
+        margin-top: 10%;
+        border: 1px solid #20a9e1;
+      }
+
+    `
+  ]
 })
 export class LoginComponent implements OnInit {
 

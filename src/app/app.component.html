@@ -1,20 +1,26 @@
-<h1>
-{{title}}
-</h1>
-<hr>
-<!--<div *ngIf="!authSwitch">-->
-  <!--<a [routerLink]="['login']" (click)="login()">logIn</a>-->
-<!--</div>-->
+<div class="container">
 
-<div *ngIf="authSwitch">
-  Вы вошли как:  {{ currentUser }}<br>
-  <a [routerLink]="['logout']" (click)="logout()">logOut</a>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>
+        {{title}}
+      </h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 col-md-offset-9">
+      <div *ngIf="authSwitch">
+        Вы вошли как:  <b>{{ currentUser }}</b>
+        <p><a [routerLink]="['logout']" (click)="logout()">выйти</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 
 </div>
 
-<hr>
-
-<hr>
-
-<router-outlet></router-outlet>
 
