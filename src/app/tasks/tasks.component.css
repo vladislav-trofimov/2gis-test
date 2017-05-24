@@ -34,3 +34,31 @@
   color: rgba(11,9,106,0.46);
   text-decoration: double;
 }
+
+.btn-default {
+  color: #d9edf7;
+  background-color: #6d889e;
+  border-color: #9c8f8f;
+}
+
+.btn-default:hover {
+  background-color: #1c507b;
+}
+
+.choose{
+  position:relative;
+}
+
+.vertical{
+  position: absolute;
+  width: 15%;
+  top:15%;
+  padding-left: 28%;
+  margin: auto;
+}
+
+.add{
+  position: absolute;
+  top:13%;
+  padding-left: 18%;
+}

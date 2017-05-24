@@ -1,68 +1,90 @@
-
-      <form class="form-horizontal">
-                <div class="form-group">
-                    <label for="taskname">Название задачи</label>
-                    <input type="text" id="taskname" #taskname>
-                </div>
-                <div class="form-group">
-                    <label for="dateStart">Дата начала задачи</label>
-                    <input type="text" id="dateStart" #datestart>
-                </div>
-                <div class="form-group">
-                    <label for="dateFinish">Дата конца задачи</label>
-                    <input type="text" id="dateFinish" #datefinish>
-                </div>
-                <div *ngIf="(datestart.value)&&(datefinish.value)" >
-                  <div *ngIf="(datefinish.value<datestart.value)" class="alert alert-danger">
-                    Дата завершения должна быть больше даты начала
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="selectEmployee">Выбор исполнителя</label>
-                  <select  name="selectEmployee" id="selectEmployee" (change)="onChange($event.target.value)">
-                    <option value="user1" disabled> выбор   </option>
-                    <option *ngFor="let employer of employee" [value]="employer.name">{{employer.name}}</option>
-                    <!--<option value="user1">user1</option>-->
-                    <!--<option value="user2">user2</option>-->
-                    <!--<option value="user3">user3</option>-->
-                  </select>
-                  <div *ngIf="addEmployee">{{addEmployee}}</div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary"
-                            (click)="addTask(taskname.value, datestart.value, datefinish.value)">Добавить задачу</button>
-                </div>
-            </form>
-
-
-      <form class="form-horizontal">
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-2 nav">
+      <br>
+      <button (click)="showTasks()" class="btn btn-default">показать задачи</button><br>
+      <hr>
+      <button (click)="toggleMenu('newTask')" class="btn btn-default" id="addTaskBtn">добавить задачy</button><br>
+      <hr>
+      <button (click)="toggleMenu('newUser')" class="btn btn-default" id="addUserBtn">добавить сотрудника</button><br>
+      <div id="comments"></div>
+    </div>
+    <div class="col-md-10">
+      <br>
+      <form [hidden] = "!visibleControl.newTask"  class="form-horizontal">
         <div class="form-group">
-          <label for="username">Имя</label>
-          <input type="text" id="username" #username>
+          <label for="taskname" class="col-md-3 control-label">Название задачи</label>
+          <div class="col-md-9">
+            <input type="text" id="taskname" #taskname class="form-control" >
+          </div>
         </div>
         <div class="form-group">
-          <label for="position">Должность</label>
-          <input type="text" id="position" #position>
+          <label for="dateStart" class="col-md-3 control-label">Дата начала задачи</label>
+          <div class="col-md-9">
+            <input type="text" id="dateStart" #datestart class="form-control">
+          </div>
         </div>
         <div class="form-group">
-          <label for="password">Пароль</label>
-          <input type="text" id="password" #password>
+          <label for="dateFinish" class="col-md-3 control-label" >Дата конца задачи</label>
+          <div class="col-md-9">
+            <input type="text" id="dateFinish" #datefinish class="form-control">
+          </div>
+        </div>
+        <div *ngIf="(datestart.value)&&(datefinish.value)" >
+          <div *ngIf="(datefinish.value<datestart.value)" class="alert alert-danger">
+            Дата завершения должна быть больше даты начала
+          </div>
+        </div>
+        <div class="form-group choose">
+          <label for="selectEmployee" class="col-sm-3 control-label">Выбор исполнителя</label>
+          <div class="col-md-9 vertical">
+            <select  name="selectEmployee" id="selectEmployee" (change)="onChange($event.target.value)">
+              <option value="user1" disabled> выбор   </option>
+              <option *ngFor="let employer of employee" [value]="employer.name">{{employer.name}}</option>
+            </select>
+            <div *ngIf="addEmployee">{{addEmployee}}</div>
+          </div>
         </div>
         <div class="form-group">
-          <label for="admin">Статус сотрудника:   </label>
-          <input type="checkbox" name="checkbox" id="admin" #admin  [(ngModel)]="adminStatus">Админ<br>
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary"
-                  (click)="addEmployer(username.value, position.value, password.value, admin)">Добавить сотрудника</button>
+          <div class="col-md-2 col-sm-offset-1">
+            <button type="submit" class="btn btn-success "
+                    (click)="addTask(taskname.value, datestart.value, datefinish.value)">Добавить задачу</button>
+          </div>
         </div>
       </form>
-
-
-
-
-      <button (click)="showTasks()" class="btn btn-success">Показать задачи</button>
-      <div *ngIf="tasks.length!=0">
+      <form [hidden] = "!visibleControl.newUser" class="form-horizontal">
+        <div class="form-group">
+          <label for="username" class="col-md-2 control-label">Имя</label>
+          <div class="col-md-10">
+            <input type="text" id="username" #username class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="position" class="col-md-2 control-label">Должность</label>
+          <div class="col-md-10">
+            <input type="text" id="position" #position class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="col-md-2 control-label">Пароль</label>
+          <div class="col-md-10">
+            <input type="text" id="password" #password class="form-control">
+          </div>
+        </div>
+        <div class="form-group choose">
+          <label for="admin" class="col-md-2 control-label">Статус:   </label>
+          <div class="col-md-10 add">
+            <input type="checkbox" name="checkbox" id="admin" #admin  [(ngModel)]="adminStatus">Админ<br>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-2 col-sm-offset-1">
+            <button type="submit" class="btn btn-success"
+                  (click)="addEmployer(username.value, position.value, password.value, admin)">Добавить сотрудника</button>
+          </div>
+        </div>
+      </form>
+      <div *ngIf="(tasks.length!=0) && visibleControl.tasks">
         <table class="table table-condensed">
           <tr>
             <td>Название</td>
@@ -85,15 +107,9 @@
           </tr>
         </table>
       </div>
-
-
-      <div id="comments">
-
-      </div>
-
-
-
-
+    </div>
+  </div>
+</div>
 
 
 <div id="modal">

@@ -10,7 +10,7 @@ import {StatusService} from "./status.service";
     <div class="row">
       <div class="col-md-4 col-md-offset-4 login">
         <h4>вход в систему</h4>
-        <form class="form-horizontal">
+        <form class="form-horizontal myForm">
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">имя</label>
             <div class="col-sm-10">
@@ -39,11 +39,22 @@ import {StatusService} from "./status.service";
         background-color: #20a9e1;
         color: white;
         text-align: center;
+        width:100%;
+        box-sizing: border-box;
+        margin: 0;
+        line-height: 1.4;
       }
 
       .login {
         margin-top: 10%;
         border: 1px solid #20a9e1;
+        padding: 0;
+      }
+      
+      .myForm{
+        margin-bottom: 0;
+        padding-bottom: 0;
+        padding-left: 5px;
       }
 
     `

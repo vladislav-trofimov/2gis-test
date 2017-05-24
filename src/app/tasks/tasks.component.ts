@@ -18,6 +18,11 @@ export class TasksComponent implements OnInit{
   private tasks:any=[];
   private addEmployee:Array<string> = [];
   private comments:any={};
+  private visibleControl:any = {
+    tasks:false,
+    newTask:false,
+    newUser:false
+  };
   listenFunc: Function;
   constructor(private dataService:DataService, elementRef:ElementRef, renderer:Renderer, private statusService:StatusService) {
     this.listenFunc = renderer.listen(elementRef.nativeElement, 'click', (event) => {
@@ -40,6 +45,18 @@ export class TasksComponent implements OnInit{
     this.comments = document.getElementById('comments');
     this.comments.style.visibility = 'hidden';
   }
+
+  toggleMenu(param){
+    for (let prop in this.visibleControl){
+      if (this.visibleControl.hasOwnProperty(prop)){
+        this.visibleControl[prop] = false;
+      }
+    }
+    if (param == 'newTask') this.visibleControl.newTask = true;
+    if (param == 'newUser') this.visibleControl.newUser = true;
+    if (param == 'tasks') this.visibleControl.tasks = true;
+  }
+
 
   updateTask(taskId){
     this.addEmployee.length = 0;
@@ -103,6 +120,8 @@ export class TasksComponent implements OnInit{
   }
 
   showTasks(){
+    this.toggleMenu('tasks');
+    //this.visibleControl.tasks = true;
     this.dataService.getTaskList()
       .subscribe(
         data => {
@@ -229,6 +248,13 @@ export class TasksComponent implements OnInit{
           this.employee = data;
         }
       );
+    if (!this.currentStatus){
+      $('#addUserBtn').prop('disabled', true);
+      $('#addTaskBtn').prop('disabled', true);
+    }
+
+
+
     $( "#dateStart, #dateFinish, #newdateStart, #newdateFinish" ).datepicker({
       dayNamesMin: [ "Вс","Пон", "Вт", "Ср", "Чт", "Пт", "Сб"], firstDay: 1,
       monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
