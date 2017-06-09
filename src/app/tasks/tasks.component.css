@@ -62,3 +62,25 @@
   top:13%;
   padding-left: 18%;
 }
+
+.text-center{
+  text-align: center;
+}
+
+#comments{
+  /*background-color: grey;*/
+  position:relative;
+  padding-bottom:50px;
+}
+#sendMessage{
+  position: absolute;
+  bottom: 0;
+}
+#commentsWindow{
+  overflow: auto;
+  height: 200px;
+}
+
+#sendBtn{
+  width: 100%;
+}

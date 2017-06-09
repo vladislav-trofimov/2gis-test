@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));
-
+app.use(express.static(path.join(__dirname, 'src')));
 // Set our api routes
 
 app.use('/db', db);
@@ -49,7 +49,7 @@ const server = http.createServer(app);
 const io = require('socket.io').listen(server);
 io.sockets.on('connection', function(client){
   console.log('a user connected');
-  chatHandle(client);
+  chatHandle(client, io);
   userHandle(client, users, privateUsers);
   privateChatHandle(client, users, privateUsers, io);
 });

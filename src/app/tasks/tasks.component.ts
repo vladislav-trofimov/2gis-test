@@ -18,6 +18,9 @@ export class TasksComponent implements OnInit{
   private tasks:any=[];
   private addEmployee:Array<string> = [];
   private comments:any={};
+  private commentsWindow:any={};
+  private sendButton:any={};
+  private checkListener = false;
   private visibleControl:any = {
     tasks:false,
     newTask:false,
@@ -43,6 +46,8 @@ export class TasksComponent implements OnInit{
     this.modal = document.getElementById('modal');
     this.modal.style.visibility = 'hidden';
     this.comments = document.getElementById('comments');
+    this.commentsWindow = document.getElementById('commentsWindow');
+    this.sendButton = document.getElementById('sendBtn');
     this.comments.style.visibility = 'hidden';
   }
 
@@ -183,47 +188,63 @@ export class TasksComponent implements OnInit{
 
 
   showComments(id){
+    this.comments.style.visibility = 'visible';
+    //let button = document.getElementById('sendBtn');
+    //let textComment = document.getElementById('inputMsg');
+    let inputValue = (<HTMLInputElement>document.getElementById('inputMsg'));
+    //let commentsWindow = document.getElementById('commentsWindow');
     let currentTask;
     this.tasks.forEach((task)=>{
       if (task._id == id) currentTask = task;
     });
-    this.comments.innerHTML = '';
-    let doc = document.createElement('div');
-    let title = document.createElement('p');
-    let button = document.createElement('button');
-    button.addEventListener('click',  ()=> {
-      console.log('Пользователь: '+ this.currentUser+ '  Комментарий: '
-        + textComment.value + ' Дата: ' + new Date + ' для задачи: ' + currentTask._id);
-      this.addComment(currentTask._id, this.currentUser, textComment.value, new Date);
-    });
-    let textComment = document.createElement('textarea');
-    textComment.setAttribute("rows", "5");
-    textComment.setAttribute("cols", "35");
-    textComment.setAttribute("id", "comArea");
-    doc.style.height = "150px";
-    doc.style.overflow = "auto";
-    button.textContent = 'Добавить комментарий';
-    title.textContent = 'Комментарии';
+    this.commentsWindow.innerHTML = '';
+    //let doc = document.createElement('div');
+    //let title = document.createElement('p');
+    //let button = document.createElement('button');
+    if(!this.checkListener){
+      this.sendButton.addEventListener('click',  ()=> {
+        console.log('clk');
+        let val = inputValue.value;
+        if (val != ''){
+          console.log('Пользователь: '+ this.currentUser+ '  Комментарий: '
+            + val + ' Дата: ' + new Date + ' для задачи: ' + currentTask._id);
+          this.addComment(currentTask._id, this.currentUser, val, new Date);
+        }
+      });
+    }
+    this.checkListener = true;
+
+    //let textComment = document.createElement('textarea');
+
+    //textComment.setAttribute("rows", "5");
+    //textComment.setAttribute("cols", "20");
+    //textComment.setAttribute("id", "comArea");
+    //doc.style.height = "150px";
+    //doc.style.overflow = "auto";
+    //button.textContent = 'Добавить комментарий';
+    //title.textContent = 'Комментарии';
     let commentText = '<b>'+currentTask.name+'</b>'+'<hr>';
     currentTask.comments.forEach((comment)=>{
-      commentText+='имя: '+comment.name+'<br>'+'комментарий: '+comment.text+'<br>'+comment.date+'<hr>';
+      commentText+='имя: '+comment.name+'<br>'+'комментарий: '+comment.text+'<br>'+(comment.date).substr(0, 10)+'<hr>';
+      console.log(typeof comment.date);
     });
-    doc.innerHTML=commentText;
-    doc.style.height = "250px";
-    this.comments.appendChild(title);
-    this.comments.appendChild(doc);
-    this.comments.appendChild(textComment);
-    this.comments.appendChild(button);
+    this.commentsWindow.innerHTML=commentText;
+    //doc.style.height = "250px";
+    //this.comments.appendChild(title);
+    //this.comments.children[0].appendChild(doc);
+    //this.comments.appendChild(textComment);
+    //this.comments.appendChild(button);
     this.comments.style.visibility = 'visible';
   }
 
   addComment(id, user, commentText, date){
-    let doc = document.createElement('div');
-    let comArea = document.getElementById('comArea');
-    doc.style.color = 'blue';
-    doc.innerHTML= 'имя: '+user+'<br>'+'комментарий: '+commentText+'<br>'+date.toDateString() +'<hr>';
-    console.log(comArea);
-    this.comments.insertBefore(doc, comArea);
+    let newComment = document.createElement('p');
+    //let comArea = document.getElementById('comArea');
+    newComment.style.color = 'blue';
+    newComment.innerHTML= 'имя: '+user+'<br>'+'комментарий: '+commentText+'<br>'+date.toDateString() +'<hr>';
+    //console.log(comArea);
+    this.commentsWindow.appendChild( newComment);
+    this.commentsWindow.scrollTop = 9999;
     let comment ={
       id:id,
       user:user,

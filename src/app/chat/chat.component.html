@@ -1,36 +1,64 @@
-<div id="wrapNickname">
-  <label for="nickname">enter nick:</label>
-  <input type="text" id="nickname" #nickname [(ngModel)]="name">
-  <input type="submit" (click)="enterName(nickname.value)">
+<!--<div id="wrapNickname">-->
+  <!--<label for="nickname">enter nick:</label>-->
+  <!--<input type="text" id="nickname" #nickname [(ngModel)]="name">-->
+  <!--<input type="submit" (click)="enterName(nickname.value)">-->
+<!--</div>-->
+
+<div class="row">
+  <div class="col-md-6">
+    <div *ngIf="users" id="users">
+      <!--в общем чате сейчас:-->
+      <!--<ul *ngFor="let user of users">-->
+        <!--<li>-->
+          <!--{{user}}-->
+          <!--<button *ngIf="role && user!=name" (click)="addUserToChat(user)">добавить в групповой чат</button>-->
+        <!--</li>-->
+      <!--</ul>-->
+      <table class="table table-responsive">
+        <tr>
+          <td> общий чат:</td><td class="add">добавить в групповой</td>
+        </tr>
+        <tr *ngFor="let user of users">
+          <td>
+            {{user}}
+          </td>
+          <td>
+            <div >
+              <button  *ngIf="role && user!=name"  (click)="addUserToChat(user)" type="button" class="btn btn-default inner" aria-label="Left Align">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
 
-<div *ngIf="users" id="users">
-  есть народ в чате!
-  <ul *ngFor="let user of users">
-    <li >
-      {{user}}
-      <button *ngIf="role && user!=name" (click)="addUserToChat(user)">add</button>
-    </li>
-
-  </ul>
-</div>
 <hr>
-<button (click)="secretRoomEnter()">enter secret room</button>
-<button (click)=" privateRoomSendMessages()">enter private room</button>
-<button (click)=" emitPrivateMessage()">emit private message</button>
-<hr>
-
-<div class="groupChat" #groupChat>
-  <h4>Group Chat</h4>
-  <p></p>
-  <p></p>
-  <input type="text" id="privateChatText" #privateChatText>
-  <button (click)="emitPrivateMessage(privateChatText.value)">отправить</button>
+<!--<button (click)="secretRoomEnter()">enter secret room</button>-->
+<!--<button (click)=" privateRoomSendMessages()">enter private room</button>-->
+<!--<button (click)=" emitPrivateMessage()">emit private message</button>-->
+<div class="row">
+  <div class="col-md-6 commonChat">
+    <h5>cообщения в общем чате</h5>
+    <ul id="messages">
+    </ul>
+    <div class="sendMessage">
+      <input id="m" autocomplete="off" #message /><button (click)="send(message.value)" class="btn btn-default">отправить</button>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="groupChat" #groupChat>
+      <h5>сообщения в групповом чату</h5>
+      <ul class="list"></ul>
+      <ul id="privateChat"></ul>
+      <div class="sendMessage">
+        <input type="text" id="privateChatText" #privateChatText>
+        <button (click)="emitPrivateMessage(privateChatText.value)" class="btn btn-default">отправить</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<ul id="messages">
-  Чат
-</ul>
-<form action="">
-  <input id="m" autocomplete="off" #message /><button (click)="send(message.value)">Send</button>
-</form>
+

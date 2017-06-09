@@ -18,15 +18,22 @@ export class ChatComponent implements OnInit{
   private name:string;
   private role:string;
   private users:Array<string>=[];
+  private messages:any;
 
   constructor( private renderer:Renderer, private statusService:StatusService) {
     this.socket = io('http://localhost:3000');
 
-    const listener = Observable.fromEvent(this.socket, 'message');
-    listener.subscribe((data) => {
+    // const listener = Observable.fromEvent(this.socket, 'message');
+    // listener.subscribe((data) => {
+    //   console.log(data);
+    //   let str = '<li>'+data+'---'+'</li>';
+    //   $('#messages').append( str);
+    // });
+
+    this.socket.on('message', data=>{
       console.log(data);
-      let str = '<li>'+data+'</li>';
-      $('#messages').append( str);
+      //let str = '<li>'+data+'---+'+'</li>';
+      $('#messages').append('<li>'+data+'</li>');
     });
 
     this.socket.on('usernames',  (data)=> {
@@ -35,11 +42,11 @@ export class ChatComponent implements OnInit{
     });
 
     this.socket.on('privateUsernames',  (data)=> {
-      //console.log(data);
+      console.log(this.groupChat.nativeElement.children[1]);
       //this.users = data;
       this.groupChat.nativeElement.children[1].innerHTML='';
       data.forEach((user)=>{
-        this.groupChat.nativeElement.children[1].innerHTML+=user+'<br>';
+        this.groupChat.nativeElement.children[1].innerHTML+='<li style="list-style: none">'+user+'</li>';
       });
     });
 
@@ -63,6 +70,11 @@ export class ChatComponent implements OnInit{
     });
   }
 
+  ngAfterViewInit(){
+    this.messages = document.getElementById('messages');
+  }
+
+
   enterName(name){
     console.log(name);
     console.log(this.name);
@@ -76,10 +88,13 @@ export class ChatComponent implements OnInit{
   }
 
   send(msg) {
-    msg = this.name+': ' + msg;
-    this.socket.emit('message', msg);
-    $('#messages').append('<li>'+ msg+'</li>');
-    $('#m').val('');
+    if (msg != ''){
+      msg = this.name+': ' + msg;
+      this.socket.emit('message', msg);
+      $('#m').val('');
+      this.messages.scrollTop = 9999;
+    }
+    //$('#messages').append('<li>'+ msg+'</li>');
   }
 
   secretRoomEnter(){
@@ -121,11 +136,12 @@ export class ChatComponent implements OnInit{
 
 
   emitPrivateMessage(message){
-    this.socket.emit('send message',{
-      room: 13,
-      message:this.name + ' :  '+ message
-    });
-
+    if (message!=''){
+      this.socket.emit('send message',{
+        room: 13,
+        message:this.name + ' :  '+ message
+      });
+    }
   }
 
   // sendToPrivateChat(privateMessage){

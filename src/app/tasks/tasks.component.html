@@ -7,7 +7,13 @@
       <button (click)="toggleMenu('newTask')" class="btn btn-default" id="addTaskBtn">добавить задачy</button><br>
       <hr>
       <button (click)="toggleMenu('newUser')" class="btn btn-default" id="addUserBtn">добавить сотрудника</button><br>
-      <div id="comments"></div>
+      <div id="comments">
+        <div id="commentsWindow"></div>
+        <div id="sendMessage">
+          <input type="text" name="" value="" id="inputMsg">
+          <button type="button" name="button" id="sendBtn">добавить комментарий</button>
+        </div>
+      </div>
     </div>
     <div class="col-md-10">
       <br>
@@ -103,7 +109,7 @@
             <td>{{task.reasponsiblePersons}}</td>
             <td><span id="comment" (click)="showComments(task._id)">подробнее...</span></td>
             <td>{{task.status}}</td>
-            <td *ngIf="currentStatus"><a href="del{{task._id}}">x</a></td>
+            <td *ngIf="currentStatus" class="text-center"><a href="del{{task._id}}">x</a></td>
           </tr>
         </table>
       </div>
