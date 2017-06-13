@@ -7,11 +7,11 @@ export class AuthService {
 
   constructor(private http:Http) { }
 
+  // проверка пользователя по логину и паролю
   checkUser(user){
     const body = JSON.stringify(user);
     const headers = new Headers();
     headers.append('Content-type', 'application/json');
-    console.log(body);
     return this.http.post('http://localhost:3000/db/checkuser',body, {headers:headers})
       .map((data:Response)=>data.json());
   }

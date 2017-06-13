@@ -1,3 +1,4 @@
+// создание модели Задача
 var mongoose = require('mongoose');
 var options = require('../config/config');
 
@@ -7,7 +8,6 @@ connection.on('error', function (err) {
     console.log('MongoDb connection error');
   connection.db.close();
   module.exports = false;
-  //return false;
 });
 
 var commentSchema = new mongoose.Schema({
@@ -16,7 +16,7 @@ var commentSchema = new mongoose.Schema({
  date: {type: Date, default: Date.now}
 });
 
-// create a  Task schema
+// создание схемы для модели Задача
 var taskSchema = new mongoose.Schema({
   name: {type: String, required: true, unique: true},
   dateStart: {type: Date, default: Date.now},
@@ -24,18 +24,15 @@ var taskSchema = new mongoose.Schema({
   reasponsiblePersons: [{type: String}],
   status: {type: String, default: "активная"},
   comments: [commentSchema]
-    //  [{type:Object, default:{}}],
-    // priority:{type:String},
 });
 
-// the schema is useless so far
-// we need to create a model using it
+
   var Task = connection.model('Task', taskSchema);
 
-// make this available to our users in our Node applications
+
   module.exports = Task;
 
-// create a  comment schema - children for taskSchema
+
 
 
 

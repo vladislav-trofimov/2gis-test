@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private authService:AuthService, private statusService:StatusService) { }
 
+  // поверяем введенные данные/ в случае совпадения с данными, хранящимися в базе - сохраняем пользователя в localStorage
   checkUserData(username, password){
     this.authService.checkUser({
       username:username,
@@ -81,8 +82,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    // если данные о пользователе находятся в хранилище - переходим на закрытую область
     if (localStorage.getItem('user')){
-      console.log('User exists go to profile');
       this.router.navigate(['/profile']);
     }
   }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import * as Rx from 'rxjs/Rx';
-
+// сервис полученияданных о пользователе
 @Injectable()
 export class StatusService {
   private status:boolean;
@@ -12,7 +12,6 @@ export class StatusService {
   setStatus(status){
     this.status = status;
     this.infoStatus.next();
-    console.log('settled status: '+ this.status);
   }
 
   infoChanged() {

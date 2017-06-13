@@ -1,19 +1,6 @@
-<!--<div id="wrapNickname">-->
-  <!--<label for="nickname">enter nick:</label>-->
-  <!--<input type="text" id="nickname" #nickname [(ngModel)]="name">-->
-  <!--<input type="submit" (click)="enterName(nickname.value)">-->
-<!--</div>-->
-
 <div class="row">
   <div class="col-md-6">
     <div *ngIf="users" id="users">
-      <!--в общем чате сейчас:-->
-      <!--<ul *ngFor="let user of users">-->
-        <!--<li>-->
-          <!--{{user}}-->
-          <!--<button *ngIf="role && user!=name" (click)="addUserToChat(user)">добавить в групповой чат</button>-->
-        <!--</li>-->
-      <!--</ul>-->
       <table class="table table-responsive">
         <tr>
           <td> общий чат:</td><td class="add">добавить в групповой</td>
@@ -36,9 +23,6 @@
 </div>
 
 <hr>
-<!--<button (click)="secretRoomEnter()">enter secret room</button>-->
-<!--<button (click)=" privateRoomSendMessages()">enter private room</button>-->
-<!--<button (click)=" emitPrivateMessage()">emit private message</button>-->
 <div class="row">
   <div class="col-md-6 commonChat">
     <h5>cообщения в общем чате</h5>

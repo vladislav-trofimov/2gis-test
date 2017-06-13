@@ -1,4 +1,4 @@
-// Get dependencies
+// подключение модулей
 const express = require('express');
 const options = require('./server/config/config');
 const path = require('path');
@@ -8,44 +8,45 @@ let chatHandle = require('./server/chat/chat');
 let userHandle = require('./server/chat/users');
 let privateChatHandle = require('./server/chat/private');
 
-let users = {};
-let privateUsers = {};
+let users = {}; // объект хранящий пользователей в общем чате
+let privateUsers = {}; // объект хранящий пользователей в приватном чате
 
-// Get our API routes
+
 const db = require('./server/routes/db');
 const upload = require('./server/routes/upload');
 
 const app = express();
 
-// Parsers for POST data
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Point static path to dist
+// Расположение статичных файлов
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(path.join(__dirname, 'src')));
-// Set our api routes
+
 
 app.use('/db', db);
 
 app.use('/upload', upload);
 
-// Catch all other routes and return the index file
+// отлавливаем все посторонние маршруты и перенаправляем на index.html
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 /**
- * Get port from environment and store in Express.
+ * установка порта в параметрах окружения.
  */
 const port = process.env.PORT || options.port;
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
+
+// создание сервера
+
 const server = http.createServer(app);
 
+// подключение websockets
 const io = require('socket.io').listen(server);
 io.sockets.on('connection', function(client){
   console.log('a user connected');
@@ -54,8 +55,5 @@ io.sockets.on('connection', function(client){
   privateChatHandle(client, users, privateUsers, io);
 });
 
-
-/**
- * Listen on provided port, on all network interfaces.
- */
+// запуск сервера
 server.listen(port, () => console.log(`API running on localhost:${port}`));

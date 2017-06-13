@@ -1,3 +1,4 @@
+// создание модели Пользователь
 var mongoose = require('mongoose');
 var options = require('../config/config');
 
@@ -10,6 +11,7 @@ connection.on('error', function (err) {
     return false;
   });
 
+// создание схемы для модели Пользователь
   var userSchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
     position: { type: String, required: true },

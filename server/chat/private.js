@@ -1,30 +1,20 @@
+// модуль обработки сообщений в приватном чате
 module.exports = function (client, users, privateUsers, io) {
   let tempList=[];
   client.on('subscribe',function(room){
-    if (!tempList.includes(client.nickname)){
-      console.log('joining room', room, '  :  ' , client.nickname);
+    if (!tempList.includes(client.nickname)){  // если это новый участник чата, подключаем его
       tempList.push(client.nickname);
       client.join(room);
     }
   });
-
+  // отправка сообщений всем в приватном чате
   client.on('send message',function(data){
-    console.log('sending room post', data.room, '  :  ' , client.nickname);
     io.sockets.to(data.room).emit('conversation private post',{
       message: data.message
     });});
 
+  // отправка сообщения конкретному пользователю (не используется)
   client.on("private", function(data) {
-    //console.log(users['Tom']);
-    //console.log(io.to(users[0]));
     users[data.to].emit("private", { msg: data.msg });
-    //client.emit("private", { from: 'Tom', to: data.to, msg: data.msg });
   });
-
-  // client.on("private room create", function (data) {
-  //   client.join('room');
-  //   client.broadcast.to('room').emit('for', 'hello');
-  // });
-
-
 };

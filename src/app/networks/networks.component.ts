@@ -16,9 +16,7 @@ export class NetworksComponent implements OnInit {
       let formData:FormData = new FormData();
       formData.append('uploadFile', this.file, this.file.name);
       let headers = new Headers();
-      //headers.append('Content-Type', 'multipart/form-data');
       headers.append('Accept', 'application/json');
-      //console.log(formData);
       this.http.post('upload/file', formData, { headers: headers })
         .map(res => res.json())
         .catch(error => Observable.throw(error))

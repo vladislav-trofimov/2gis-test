@@ -1,10 +1,10 @@
+// модуль управления задачами
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 let User = require('../models/user');
 let Task = require('../models/task');
 
-/* GET api listing. */
 
 // '/' - полуение POST запроса на получение списка сотрудников
 router.post('/', (req, res) => {
@@ -33,7 +33,6 @@ router.post('/addtask', (req, res)=>{
             res.json(err);
             return console.log(err);
         }
-        console.log('inserted');
     });
 });
 
@@ -42,9 +41,7 @@ router.post('/tasklist', (req, res)=>{
     Task.find({}, function(err, tasks) {
         if (err) {
           res.json(err);
-          console.log('terrible error'+err);
         }
-        console.log(tasks);
         res.setHeader('Content-Type', 'application/json');
         res.json(tasks);
     });
@@ -68,7 +65,6 @@ router.post('/addemployee', (req, res)=>{
       return console.log(err);
     }
     res.json('OK!');
-    console.log('user inserted');
   });
 });
 
@@ -82,9 +78,7 @@ router.post('/checkuser', (req, res)=>{
   equals(pass).
   exec(function(err, user) {
     if (err) throw err;
-    console.log(user.length);
     if (user.length > 0) {
-      console.log(user[0].name);
       res.json({name:user[0].name, admin:user[0].admin})
     }
   });
@@ -98,7 +92,6 @@ router.post('/updatestatus', (req, res)=>{
     task.status = 'завершена';
     task.save(function (err, updatedTask) {
       if (err) return handleError(err);
-      console.log(updatedTask);
       //res.send(updatedTank);
     });
   });
@@ -114,7 +107,6 @@ router.post('/updatetask', (req, res)=>{
     task.reasponsiblePersons = req.body.reasponsiblePersons;
     task.save(function (err, updatedTask) {
       if (err) return handleError(err);
-      console.log(updatedTask);
       //res.send(updatedTank);
     });
   });
@@ -122,7 +114,6 @@ router.post('/updatetask', (req, res)=>{
 
 router.post('/addcomment', (req, res)=>{
   "use strict";
-  console.log(req.body);
   Task.findByIdAndUpdate(
     req.body.id,
     {$push: {"comments":{name:req.body.user, text:req.body.comment, date:req.body.date}}},
@@ -132,18 +123,6 @@ router.post('/addcomment', (req, res)=>{
     }
   );
 });
-
-// Contact.findByIdAndUpdate(
-//   info._id,
-//   {$push: {"messages": {title: title, msg: msg}}},
-//   {safe: true, upsert: true, new : true},
-//   function(err, model) {
-//     console.log(err);
-//   }
-// );
-
-
-
 
 function getHash(password) {
   return crypto.createHmac('sha1', 'my secret world').update(password).digest('hex');

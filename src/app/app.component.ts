@@ -16,7 +16,6 @@ export class AppComponent implements OnInit{
   constructor(private authService:AuthService, private statusService:StatusService){
     this.statusService.infoChanged().subscribe({
       next: () => {
-        console.log('Object info from statusService has changed!');
         this.switchAuthStatus();
         this.authSwitch = true;
       }
@@ -28,22 +27,13 @@ export class AppComponent implements OnInit{
        this.currentUser = JSON.parse(this.authService.getCurrentUser()).name || '';
        this.authSwitch = true;
      }
-      console.log('currentUser: '+this.currentUser);
   }
-  //
-  //
+
   logout(){
     this.currentUser='';
     this.authSwitch = false;
   }
-  //
-  // login(){
-  //   this.currentUser = 'MockUser';
-  //     //JSON.parse(this.authService.getCurrentUser()).name || '';
-  //   this.authSwitch = true;
-  // }
-  //
-  //
+
   ngOnInit(){
     this.switchAuthStatus();
   }
