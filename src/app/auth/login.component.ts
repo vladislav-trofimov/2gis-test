@@ -9,26 +9,29 @@ import {StatusService} from "./status.service";
   template: `
     <div class="row">
       <div class="col-md-4 col-md-offset-4 login">
-        <h4>вход в систему</h4>
+        <h4>enter</h4>
         <form class="form-horizontal myForm">
           <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">имя</label>
+            <label for="name" class="col-sm-2 control-label">login</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="name"  #username>
             </div>
           </div>
           <div class="form-group">
-            <label for="pass" class="col-sm-2 control-label">пароль</label>
+            <label for="pass" class="col-sm-2 control-label">password</label>
             <div class="col-sm-10">
               <input type="password" class="form-control" id="pass"  #password>
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button (click)="checkUserData(username.value, password.value)" class="btn btn-default">войти</button>
+              <button (click)="checkUserData(username.value, password.value)" class="btn btn-default">submit</button>
             </div>
           </div>
         </form>
+        <div class="register">
+          <a [routerLink]="['/register']" >registration</a>
+        </div>
       </div>
     </div>
     
@@ -56,6 +59,10 @@ import {StatusService} from "./status.service";
         padding-bottom: 0;
         padding-left: 5px;
       }
+      
+      .register{
+        text-align: center;
+      }
 
     `
   ]
@@ -64,11 +71,11 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private authService:AuthService, private statusService:StatusService) { }
 
-  // поверяем введенные данные/ в случае совпадения с данными, хранящимися в базе - сохраняем пользователя в localStorage
+  // check user info and if successful store it to localStorage
   checkUserData(username, password){
     this.authService.checkUser({
       username:username,
-      password:password //шифрование!
+      password:password //crypt !
     }).subscribe(
       data=>{
         console.dir('check user data: '+ data.name + data.admin);
@@ -76,15 +83,15 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('user', JSON.stringify(user));
         console.log('setting user');
         this.statusService.setStatus(true);
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/profile/main']);
       }
     );
   }
 
   ngOnInit() {
-    // если данные о пользователе находятся в хранилище - переходим на закрытую область
+    // if user info in the localStorage - route to  private area
     if (localStorage.getItem('user')){
-      this.router.navigate(['/profile']);
+      this.router.navigate(['/profile/main']);
     }
   }
 

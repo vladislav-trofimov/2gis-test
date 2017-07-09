@@ -3,7 +3,7 @@
 # compiled output
 /dist
 /tmp
-/server/config/twitter.json
+
 
 # dependencies
 /node_modules
@@ -40,3 +40,7 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+src/app/about/
+src/app/auth/register.component.ts
+src/app/main/
+src/img/

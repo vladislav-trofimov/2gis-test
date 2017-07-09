@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import {Http, Response, Headers} from "@angular/http";
 
-
 @Injectable()
 export class AuthService {
 
   constructor(private http:Http) { }
 
-  // проверка пользователя по логину и паролю
+  // check user info
   checkUser(user){
     const body = JSON.stringify(user);
     const headers = new Headers();
@@ -25,5 +24,4 @@ export class AuthService {
       return localStorage.getItem('user');
     }
   }
-
 }

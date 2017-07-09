@@ -1,64 +1,69 @@
-// модуль управления задачами
+// api module
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 let User = require('../models/user');
-let Task = require('../models/task');
+let Marker = require('../models/markers');
 
 
-// '/' - полуение POST запроса на получение списка сотрудников
-router.post('/', (req, res) => {
-    User.find({}, function(err, users) {
-        if (err) {
-          res.setHeader('Content-Type', 'application/json');
-          res.json(err);
-        }
-        res.setHeader('Content-Type', 'application/json');
-        res.json(users);
-    });
+// '/db/add' - adding the markers positions
+router.post('/add', (req, res)=>{
+  Marker.findOneAndUpdate({}, { $set: { list: req.body.list } }, { new: true }, function(err, doc) {
+    if (err){
+      console.log(err);
+    }else{
+      if (doc === null){
+        let newMarker = Marker({
+          list:req.body.list
+        });
+        newMarker.save(function (err) {
+          if (err){
+            console.log(err);
+          }
+        });
+      }
+      res.json('marker(s) saved successfully');
+    }
+  });
 });
 
-// '/db' - полуение POST запроса на добавление задачи
-router.post('/addtask', (req, res)=>{
-    console.log(req.body);
-    let newTask = new Task({
-        name:req.body.taskName,
-        dateStart:req.body.dateStart,
-        dateFinish:req.body.dateFinish,
-        reasponsiblePersons:req.body.reasponsiblePersons
-    });
-    newTask.save(function (err) {
-        if (err){
-            res.setHeader('Content-Type', 'application/json');
-            res.json(err);
-            return console.log(err);
-        }
-    });
+// 'db/list' - getting all markers positions
+router.get('/list', (req, res)=>{
+  Marker.find({}, function(err, markers) {
+    if (err) {
+      res.json(err);
+    }else{
+      res.setHeader('Content-Type', 'application/json');
+      res.json(markers);
+    }
+  });
 });
 
-// 'db/tasklist' - полуение POST запроса на получение списка задач
-router.post('/tasklist', (req, res)=>{
-    Task.find({}, function(err, tasks) {
-        if (err) {
-          res.json(err);
-        }
-        res.setHeader('Content-Type', 'application/json');
-        res.json(tasks);
-    });
+// 'db/delete' - delete all markers
+router.get('/delete', (req, res)=>{
+  Marker.remove({}, function(err, markers) {
+    if (err) {
+      res.json(err);
+    }else{
+      res.setHeader('Content-Type', 'application/json');
+      console.log('marker(s) removed');
+      res.json('marker(s) removed');
+    }
+  });
 });
 
-// 'db/addemployee' - полуение POST запроса на добавление сотрудника
-router.post('/addemployee', (req, res)=>{
+
+// 'db/adduser' - add new user
+router.post('/adduser', (req, res)=>{
   "use strict";
   let pass = getHash(req.body.password);
-  let newEmployee = new User({
+  let newUser = new User({
     name: req.body.name,
-    position: req.body.position,
+    position: 'user',
     password: pass,
-    //password: req.body.password,
-    admin: req.body.admin
+    admin: false
   });
-  newEmployee.save(function (err) {
+  newUser.save(function (err) {
     if (err){
       res.setHeader('Content-Type', 'application/json');
       res.json(err);
@@ -68,7 +73,7 @@ router.post('/addemployee', (req, res)=>{
   });
 });
 
-// 'db/checkuser' - полуение POST запроса на проверку сотрудника
+// 'db/checkuser' - check user login info
 router.post('/checkuser', (req, res)=>{
   "use strict";
   console.log(req.body);
@@ -82,46 +87,6 @@ router.post('/checkuser', (req, res)=>{
       res.json({name:user[0].name, admin:user[0].admin})
     }
   });
-});
-
-// 'db/updatestatus' - полуение POST запроса на изменение статуса задачи
-router.post('/updatestatus', (req, res)=>{
-  "use strict";
-  Task.findById(req.body.id, function (err, task) {
-    if (err) return handleError(err);
-    task.status = 'завершена';
-    task.save(function (err, updatedTask) {
-      if (err) return handleError(err);
-      //res.send(updatedTank);
-    });
-  });
-});
-
-router.post('/updatetask', (req, res)=>{
-  "use strict";
-  Task.findById(req.body.id, function (err, task) {
-    if (err) return handleError(err);
-    task.name = req.body.name;
-    task.dateStart = req.body.dateStart;
-    task.dateFinish = req.body.dateFinish;
-    task.reasponsiblePersons = req.body.reasponsiblePersons;
-    task.save(function (err, updatedTask) {
-      if (err) return handleError(err);
-      //res.send(updatedTank);
-    });
-  });
-});
-
-router.post('/addcomment', (req, res)=>{
-  "use strict";
-  Task.findByIdAndUpdate(
-    req.body.id,
-    {$push: {"comments":{name:req.body.user, text:req.body.comment, date:req.body.date}}},
-    {safe: true, upsert: true, new : true},
-    function(err, comment) {
-     console.log(err);
-    }
-  );
 });
 
 function getHash(password) {

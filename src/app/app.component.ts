@@ -2,18 +2,21 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "./auth/auth.service";
 import {StatusService} from "./auth/status.service";
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'Управление департаментом системных проектов';
+
+  title:string = '2Gis Api test task';
   authSwitch:boolean;
-  currentUser:any='';
+  currentUser: any = '';
 
 
   constructor(private authService:AuthService, private statusService:StatusService){
+
     this.statusService.infoChanged().subscribe({
       next: () => {
         this.switchAuthStatus();
@@ -21,7 +24,8 @@ export class AppComponent implements OnInit{
       }
     });
   }
-  //
+
+
   switchAuthStatus(){
      if (this.authService.isAuth()){
        this.currentUser = JSON.parse(this.authService.getCurrentUser()).name || '';

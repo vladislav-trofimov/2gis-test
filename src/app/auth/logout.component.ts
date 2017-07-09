@@ -3,10 +3,7 @@ import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-logout',
-  template: `
-    <p>
-      logout Works!
-    </p>
+  template: `    
   `,
   styles: []
 })

@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import {Http, Response, Headers} from "@angular/http";
+import {Http, Response, Headers, RequestOptions} from "@angular/http";
 import 'rxjs/Rx';
 import {Observable} from "rxjs/Observable";
-import 'rxjs/add/operator/do';  // debug
+import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch'
+
+
 
 @Injectable()
 export class DataService {
 
   private _serverError(err: any) {
-    console.log('sever error:', err);  // debug
+    console.log('sever error:', err);
     if(err instanceof Response) {
       return Observable.throw(err.json().error || 'backend server error');
-      // if you're using lite-server, use the following line
-      // instead of the line above:
-      //return Observable.throw(err.text() || 'backend server error');
     }
     return Observable.throw(err || 'backend server error');
   }
@@ -22,57 +21,61 @@ export class DataService {
 
   constructor(private http:Http) { }
 
-  getEmployeeList(){
-    let body = '';
-    return this.http.post('http://localhost:3000/db', body)
-        .map((response:Response)=>response.json());
+  // sending markers to server
+  sendMarkers(markerStorage:any){
+    const body = JSON.stringify(markerStorage);
+    let headers = new Headers({ 'Content-Type': 'application/json;charset=utf-8' });
+    let options = new RequestOptions({headers: headers});
+    return this.http.post('http://localhost:3000/db/add', body, options).
+      map(res => res.json()).
+        subscribe(
+             data => console.log(data),
+             err => console.log(err)
+          );
   }
 
-  getTaskList(){
-    let body = '';
-    return this.http.post('http://localhost:3000/db/tasklist', body)
-      .map((response:Response)=>response.json())
-      .do(data => console.log('server data:', data))  // debug
-      .catch(this._serverError);
+  // getting markers from server
+  getMarkers(){
+    return this.http.get('http://localhost:3000/db/list').
+    map(res => res.json());
   }
 
-  sendTaskData(task:any){
-    const body = JSON.stringify(task);
+
+  // remove all  markers in server
+  removeMarkers(){
+    return this.http.get('http://localhost:3000/db/delete').
+    map(res => {
+      res.json();
+    });
+  }
+
+ // building list of chosen objects (schools, shops, gas stations)
+  getObjectsList(lat, lng){
+    return {
+      schools:[
+        [lat+0.0033, lng+0.0086],
+        [lat+0.0045, lng+0.0041],
+        [lat+0.0019, lng+0.0068]
+      ],
+      shops:[
+        [lat+0.0053, lng+0.0006],
+        [lat+0.0075, lng+0.0021],
+        [lat+0.0059, lng+0.0018]
+      ],
+      gasStations:[
+        [lat+0.003, lng+0.0056],
+        [lat+0.0095, lng+0.0031],
+        [lat+0.0049, lng+0.0048]
+      ]
+    }
+  }
+
+  // sending user data to server while registration
+  sendUserData(user:any){
+    const body = JSON.stringify(user);
     const headers = new Headers();
     headers.append('Content-type', 'application/json');
-    return this.http.post('http://localhost:3000/db/addtask', body, {headers:headers})
-        .map((data:Response)=>data.json());
-  }
-
-  sendUserData(task:any){
-    const body = JSON.stringify(task);
-    const headers = new Headers();
-    headers.append('Content-type', 'application/json');
-    return this.http.post('http://localhost:3000/db/addemployee', body, {headers:headers})
-      .map((data:Response)=>data.json());
-  }
-
-  updateStatus(taskId){
-    const body = JSON.stringify(taskId);
-    const headers = new Headers();
-    headers.append('Content-type', 'application/json');
-    return this.http.post('http://localhost:3000/db/updatestatus',body, {headers:headers})
-      .map((data:Response)=>data.json());
-  }
-
-  updateTask(task){
-    const body = JSON.stringify(task);
-    const headers = new Headers();
-    headers.append('Content-type', 'application/json');
-    return this.http.post('http://localhost:3000/db/updatetask',body, {headers:headers})
-      .map((data:Response)=>data.json());
-  }
-
-  sendComment(comment){
-    const body = JSON.stringify(comment);
-    const headers = new Headers();
-    headers.append('Content-type', 'application/json');
-    return this.http.post('http://localhost:3000/db/addcomment',body, {headers:headers})
+    return this.http.post('http://localhost:3000/db/adduser', body, {headers:headers})
       .map((data:Response)=>data.json());
   }
 
