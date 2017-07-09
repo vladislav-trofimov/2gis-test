@@ -9,9 +9,9 @@ let Marker = require('../models/markers');
 // '/db/add' - adding the markers positions
 router.post('/add', (req, res)=>{
   Marker.findOneAndUpdate({}, { $set: { list: req.body.list } }, { new: true }, function(err, doc) {
-    if (err){
+    if (err) {
       console.log(err);
-    }else{
+    }else {
       if (doc === null){
         let newMarker = Marker({
           list:req.body.list
@@ -32,7 +32,7 @@ router.get('/list', (req, res)=>{
   Marker.find({}, function(err, markers) {
     if (err) {
       res.json(err);
-    }else{
+    }else {
       res.setHeader('Content-Type', 'application/json');
       res.json(markers);
     }
@@ -64,7 +64,7 @@ router.post('/adduser', (req, res)=>{
     admin: false
   });
   newUser.save(function (err) {
-    if (err){
+    if (err) {
       res.setHeader('Content-Type', 'application/json');
       res.json(err);
       return console.log(err);
@@ -74,18 +74,18 @@ router.post('/adduser', (req, res)=>{
 });
 
 // 'db/checkuser' - check user login info
-router.post('/checkuser', (req, res)=>{
+router.post('/checkuser', (req, res) => {
   "use strict";
   console.log(req.body);
   let pass = getHash(req.body.password);
   User.find({ name: req.body.username }).
-  where('password').
-  equals(pass).
-  exec(function(err, user) {
-    if (err) throw err;
-    if (user.length > 0) {
-      res.json({name:user[0].name, admin:user[0].admin})
-    }
+    where('password').
+    equals(pass).
+    exec(function(err, user) {
+      if (err) throw err;
+      if (user.length > 0) {
+        res.json({name:user[0].name, admin:user[0].admin})
+      }
   });
 });
 

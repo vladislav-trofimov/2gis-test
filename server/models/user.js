@@ -11,9 +11,9 @@ connection.on('error', function (err) {
     return false;
   });
 
-// building schems for User model
+// building schema for User model
   let userSchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true },
+    name:{ type: String, required: true, unique: true },
     position: { type: String, required: true },
     password: { type: String, required: true },
     admin: { type: Boolean, required: true },

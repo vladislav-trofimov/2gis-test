@@ -7,11 +7,11 @@ import {AboutComponent} from "./about/about.component";
 import {MainComponent} from "./main/main.component";
 import {RegisterComponent} from "./auth/register.component";
 
-const APP_ROUTES:Routes=[
-    { path:'login', component:LoginComponent},
-    {path: 'register', component:RegisterComponent},
-    { path:'logout', component:LogoutComponent },
-    { path:'profile', component:ProfileComponent, canActivate: [AuthGuard],
+const APP_ROUTES: Routes=[
+    { path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
+    { path: 'logout', component: LogoutComponent },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard],
       children: [
         { path: 'main', component: MainComponent},
         { path: 'about', component: AboutComponent }
@@ -20,4 +20,4 @@ const APP_ROUTES:Routes=[
     { path: '**', component: ProfileComponent, canActivate: [AuthGuard] },
 ];
 
-export const routing=RouterModule.forRoot(APP_ROUTES);
+export const routing = RouterModule.forRoot(APP_ROUTES);

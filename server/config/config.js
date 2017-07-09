@@ -1,4 +1,4 @@
-var options = {
+const options = {
     "mongoDatabase":"mongodb://localhost/myappdatabase",
     "port":3000
 };

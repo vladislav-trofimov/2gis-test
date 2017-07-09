@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "./auth/auth.service";
-import {StatusService} from "./auth/status.service";
+import {AuthService} from './auth/auth.service';
+import {StatusService} from './auth/status.service';
 
 
 @Component({
@@ -10,12 +10,12 @@ import {StatusService} from "./auth/status.service";
 })
 export class AppComponent implements OnInit{
 
-  title:string = '2Gis Api test task';
-  authSwitch:boolean;
+  title = '2Gis Api test task';
+  authSwitch: boolean;
   currentUser: any = '';
 
 
-  constructor(private authService:AuthService, private statusService:StatusService){
+  constructor(private authService: AuthService, private statusService: StatusService){
 
     this.statusService.infoChanged().subscribe({
       next: () => {
@@ -27,18 +27,18 @@ export class AppComponent implements OnInit{
 
 
   switchAuthStatus(){
-     if (this.authService.isAuth()){
+     if (this.authService.isAuth()) {
        this.currentUser = JSON.parse(this.authService.getCurrentUser()).name || '';
        this.authSwitch = true;
      }
   }
 
-  logout(){
-    this.currentUser='';
+  logout() {
+    this.currentUser = '';
     this.authSwitch = false;
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.switchAuthStatus();
   }
 }

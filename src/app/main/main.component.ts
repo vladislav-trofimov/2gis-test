@@ -77,7 +77,7 @@ export class MainComponent implements OnInit {
     }
   }
 
-  // totla removing of markers
+  // total removing of markers
   deleteMarkers() {
     this.removeMarkersFromMap();
     this.dataService.removeMarkers().subscribe(
@@ -92,6 +92,7 @@ export class MainComponent implements OnInit {
     );
   }
 
+  // getting  list of chosen objects
   getListOfObject(chosenList) {
     this.removeMarkersFromMap();
     let objectsList: any = [];
