@@ -30,7 +30,6 @@ export class MainComponent implements OnInit {
           this.map.setLang('en');
           this.map.on('click', (e) => {
             const marker = DG.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
-            console.log(marker);
             this.error = '';
             this.markerOnMap.push(marker);
             this.markerStorage.push([e.latlng.lat, e.latlng.lng]);
@@ -47,7 +46,6 @@ export class MainComponent implements OnInit {
     const tempMarkerArray: any = {};
     tempMarkerArray.list = this.markerStorage;
     this.dataService.sendMarkers(tempMarkerArray);
-    console.log(tempMarkerArray);
   }
 
   showMarkers() {
@@ -70,7 +68,6 @@ export class MainComponent implements OnInit {
   // remove marker from map without cleaning backend
   removeMarkersFromMap() {
     if (this.markerOnMap.length != 0) {
-      console.log(this.markerOnMap);
       for (let i = 0; i < this.markerOnMap.length; i++) {
         this.markerOnMap[i].remove();
       }

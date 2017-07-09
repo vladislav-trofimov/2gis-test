@@ -58,9 +58,9 @@ export class DataService {
         [lat + 0.0019, lng + 0.0068]
       ],
       shops: [
-        [lat + 0.0053, lng + 0.0006],
-        [lat + 0.0075, lng + 0.0021],
-        [lat + 0.0059, lng + 0.0018]
+        [lat + 0.0023, lng + 0.0006],
+        [lat + 0.0075, lng + 0.0071],
+        [lat + 0.0099, lng + 0.0018]
       ],
       gasStations: [
         [lat + 0.003, lng + 0.0056],

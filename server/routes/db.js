@@ -75,8 +75,6 @@ router.post('/adduser', (req, res)=>{
 
 // 'db/checkuser' - check user login info
 router.post('/checkuser', (req, res) => {
-  "use strict";
-  console.log(req.body);
   let pass = getHash(req.body.password);
   User.find({ name: req.body.username }).
     where('password').
