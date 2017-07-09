@@ -40,7 +40,4 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
-src/app/about/
-src/app/auth/register.component.ts
-src/app/main/
-src/img/
+

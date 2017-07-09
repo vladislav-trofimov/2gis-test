@@ -1,0 +1,12 @@
+img{
+  height: 150px;
+  width: 90px;
+}
+
+.col-1{
+  width: 20%;
+}
+
+.col-2{
+  width: 80%;
+}
